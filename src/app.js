@@ -1,12 +1,12 @@
-const configexpress = require('./config/configExpress');
+const configExpress = require('./config/configExpress');
 const config = require('config');
 const instanciadb = require('./db');
 
 (async () => {
     try {
-        await instanciadb.sync({orce: true})
+        await instanciadb.sync()
 
-        app = configexpress()
+        app = configExpress()
 
         app.listen(config.get('api.port'), () => {
         console.log('Servidor Rodando!')
