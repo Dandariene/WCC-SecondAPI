@@ -15,7 +15,7 @@ class Agendamento {
 
     async criar() {
         this.validar();
-        const result = await sequelizeAgendamentos.adicionar({
+        const result = await sequelizeAgendamento.adicionar({
         nome_cliente: this.nome_cliente,
         nome_servico: this.nome_servico,
         status: this.status,
@@ -27,7 +27,7 @@ class Agendamento {
     };
 
     async buscar() {
-        const result = await sequelizeAgendamentos.buscarPorPK(this.id);
+        const result = await sequelizeAgendamento.buscarPorPK(this.id);
         this.nome_cliente = result.nome_cliente;
         this.nome_servico = result.nome_servico;
         this.status = result.status;

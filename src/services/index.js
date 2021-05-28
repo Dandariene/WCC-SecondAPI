@@ -39,7 +39,7 @@ module.exports = {
             const id = req.params.id;
             const agendamento = new Agendamento({id : id});
             await agendamento.remover()
-            resp.status(204).send(JSON.stringify({message: `Agendamento: ${id} removido com sucesso`}))
+            resp.status(204).send(JSON.stringify({message: `Agendamento: ${id} removido com sucesso`}));
         } catch (error) {
             resp.status(404).send(JSON.stringify({error: error.message}))
         }
