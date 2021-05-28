@@ -5,7 +5,7 @@ module.exports = () => {
     const app = express();
 
     app.use(express.json());
-    app.use('./api', routesAgendamento);
+    app.use('/api', routesAgendamento);
 
     return app
 }

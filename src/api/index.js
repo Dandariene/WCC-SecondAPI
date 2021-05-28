@@ -13,6 +13,10 @@ router.post('/agendamentos',
     servicoAgendamento.criarAgendamento
 );
 
+router.put('/agendamentos/:id',
+    servicoAgendamento.deletarAgendamento
+);
+
 router.delete('/agendamentos/:id', 
     servicoAgendamento.deletarAgendamento
 );

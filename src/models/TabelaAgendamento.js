@@ -11,7 +11,7 @@ const columns = {
         allowNull: false
     },
     status:{
-        type: Sequelize.ENUM('agendado, cancelado'),
+        type: Sequelize.ENUM('agendado', 'cancelado'),
         allowNull: false
     },
     data_agendamento:{
