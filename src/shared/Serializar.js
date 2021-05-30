@@ -6,10 +6,10 @@ class Serializar{
     }
 
     transformar(dados) {
-        if (this.contentType !== 'aplication/json'){
+        if (this.contentType !== 'application/json'){
             throw new FormatoInvalido(this.contentType)
         }
-        return this.contentType(dados);
+        return this.json(dados);
     }
 }
 
@@ -17,5 +17,22 @@ class  SerializarAgendamento extends Serializar{
     constructor(contentType){
         super();
         this.contentType = contentType;
+    };
+};
+
+class SerializarErro extends Serializar{
+    constructor(contentType){
+        super();
+        this.contentType = contentType;
+        this.camposPermitidos = [
+            'id', 'mensagem'
+        ]
     }
+}
+
+module.exports = {
+    Serializar: Serializar,
+    SerializarAgendamento: SerializarAgendamento,
+    SerializarErro: SerializarErro,
+    FormatosValidos: ['application/json']
 }

@@ -1,4 +1,4 @@
-const sequelizeAgendamentos = require('../models/SequelizeAgendamentos');
+const sequelizeAgendamento = require('../models/SequelizeAgendamentos');
 const moment = require('moment');
 
 class Agendamento {

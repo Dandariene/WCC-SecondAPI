@@ -1,25 +1,33 @@
 const Agendamento = require('./Agendamento');
 const SequelizeAgendamentos = require('../models/SequelizeAgendamentos');
+const SerializarAgendamento = require('../shared/Serializar').SerializarAgendamento;
 
 module.exports = {
 
-    carregarTodosAgendamentos: async(req, resp) => {
+    carregarTodosAgendamentos: async(req, resp,next) => {
         try {
             const results = await SequelizeAgendamentos.listar();
-            resp.status(201).send(JSON.stringify(results));
+            const serializador = new SerializarAgendamento(
+                resp.getHeader('Content-Type')
+            );
+            resp.status(201).send(serializador.transformar(results));;
         } catch (error) {
-            resp.status(401).send(JSON.stringify({error: error.message}))
+           next(error)
         }
     },
 
-    carregarAgendamento: async(req, resp) => {
+    carregarAgendamento: async(req, resp, next) => {
         try{
             const id = req.params.id;
             const agendamento = new Agendamento({id: id});
             await agendamento.buscar();
-            resp.status(201).send(JSON.stringifyagendamento)
+            const serializador = new SerializarAgendamento(
+                resp.getHeader('Content-Type')
+            )
+            resp.status(201).send(serializador.transformar(agendamento)
+            )
         } catch (error){
-            resp.status(401).send(JSON.stringify({error: error.message}))
+            next(error)
         }
     },
 
@@ -49,7 +57,7 @@ module.exports = {
         try {
            const id = req.params.id;
            const dadosBody = req.body; 
-           const dados = Object.assign({}, dadosBody, {is: id})
+           const dados = Object.assign({}, dadosBody, {id: id})
             const agendamento = new Agendamento(dados);
             await agendamento.atualizar();
             resp.status(204).send()
