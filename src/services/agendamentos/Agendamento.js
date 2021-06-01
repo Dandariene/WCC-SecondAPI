@@ -1,8 +1,10 @@
-const sequelizeAgendamento = require('../models/SequelizeAgendamentos');
+const sequelizeAgendamento = require('../../models/agendamentos/SequelizeAgendamentos');
 const moment = require('moment');
-const CampoInvalido = require('../errors/CampoInvalido');
-const NaoEncontrado = require('../errors/NaoEncontrado');
-const DadosNaoInformados = require('../errors/DadosNaoInformados');
+const CampoInvalido = require('../../errors/CampoInvalido');
+const NaoEncontrado = require('../../errors/NaoEncontrado');
+const DadosNaoInformados = require('../../errors/DadosNaoInformados');
+const CampoQtdMaxima = require('../../errors/CampoQtdMaxima');
+const CampoQtdMinima = require('../../errors/CampoQtdMinima');
 
 class Agendamento {
     constructor({ id, nome_cliente, nome_servico, status, data_agendamento,

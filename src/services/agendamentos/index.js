@@ -1,6 +1,6 @@
 const Agendamento = require('./Agendamento');
-const SequelizeAgendamentos = require('../models/SequelizeAgendamentos');
-const SerializarAgendamento = require('../shared/Serializar').SerializarAgendamento;
+const SequelizeAgendamentos = require('../../models/agendamentos/SequelizeAgendamentos');
+const SerializarAgendamento = require('../../shared/Serializar').SerializarAgendamento;
 
 module.exports = {
 

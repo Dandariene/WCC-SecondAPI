@@ -1,4 +1,4 @@
-const configExpress = require('./config/configExpress');
+const configExpress = require ('./config/configExpress');
 const config = require('config');
 const instanciadb = require('./db');
 

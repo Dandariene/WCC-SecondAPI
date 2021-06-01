@@ -1,11 +1,11 @@
 const express = require('express');
-const routesAgendamento = require('../api');
+const routesAgendamento = require('../api/agendamentos');
 const FormatosValidos = require('../shared/Serializar').FormatosValidos;
 const SerializarErro = require('../shared/Serializar').SerializarErro;
 const NaoEncontrado = require('../errors/NaoEncontrado');
 const CampoInvalido =require('../errors/FormatoInvalido');
 const CampoQtdMaxima = require('../errors/CampoQtdMaxima');
-const CampoQtdMaxima = require ('../errors/CampoQtdMinima');
+const CampoQtdMinima = require ('../errors/CampoQtdMinima');
 const FormatoInvalido = require ('../errors/FormatoInvalido');
 
 module.exports = () => {
@@ -43,7 +43,7 @@ module.exports = () => {
             status = 404;
         }
 
-        if (error instanceof CampoInvalido || error instanceof CampoQtdmaxima
+        if (error instanceof CampoInvalido || error instanceof CampoQtdMaxima
             || error instanceof CampoQtdMinima) {
             status = 400;
         }

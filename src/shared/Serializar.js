@@ -7,7 +7,7 @@ class Serializar {
     }
 
     transformar(dados) {
-        dados = this.filtrar(dadis);
+        dados = this.filtrar(dados);
         if (this.contentType === 'application/json') {
             return this.json(dados);
         }
@@ -33,7 +33,7 @@ class Serializar {
 
     filtrarCampos(dados) {
         const camposFiltrados = {};
-        camposPermitidos.forEach((campo) => {
+        this.camposPermitidos.forEach((campo) => {
             if (dados.hasOwnProperty(campo)) {
                 camposFiltrados[campo] = dados[campo]
             }
