@@ -2,7 +2,7 @@
     "mysql": {
         "database": "wccagenda",
         "user": "root",
-        "password": "Zyyka1987",
+        "password": "admin",
         "host": "127.0.0.1",
         "port": "3306"
     },

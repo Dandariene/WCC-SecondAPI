@@ -4,7 +4,7 @@ const SerializarAgendamento = require('../shared/Serializar').SerializarAgendame
 
 module.exports = {
 
-    carregarTodosAgendamentos: async(req, resp,next) => {
+    carregarTodosAgendamentos: async (req, resp, next) => {
         try {
             const results = await SequelizeAgendamentos.listar();
             const serializador = new SerializarAgendamento(
@@ -12,57 +12,67 @@ module.exports = {
             );
             resp.status(201).send(serializador.transformar(results));;
         } catch (error) {
-           next(error)
+            next(error)
         }
     },
 
-    carregarAgendamento: async(req, resp, next) => {
-        try{
+    carregarAgendamento: async (req, resp, next) => {
+        try {
             const id = req.params.id;
-            const agendamento = new Agendamento({id: id});
+            const agendamento = new Agendamento({ id: id });
             await agendamento.buscar();
             const serializador = new SerializarAgendamento(
                 resp.getHeader('Content-Type')
             )
             resp.status(201).send(serializador.transformar(agendamento)
             )
-        } catch (error){
+        } catch (error) {
             next(error)
         }
     },
 
-    criarAgendamento: async(req, resp) => {
+    criarAgendamento: async (req, resp,next) => {
         try {
-           const reqAgendamento = req.body;
-           const agendamento = new Agendamento(reqAgendamento);
-           await agendamento.criar()
-           resp.status(201).send(JSON.stringify(agendamento)) 
+            const reqAgendamento = req.body;
+            const agendamento = new Agendamento(reqAgendamento);
+            await agendamento.criar()
+            const serializador = new SerializarAgendamento(
+                resp.getHeader('Content-Type')
+            );
+            resp.status(201).send(serializador.transformar(agendamento));
         } catch (error) {
-            resp.status(401).send(JSON.stringify({error: error.message}))
+            next(error)
         }
     },
 
-    deletarAgendamento: async(req, resp) => {
+    deletarAgendamento: async (req, resp, next) => {
         try {
             const id = req.params.id;
-            const agendamento = new Agendamento({id : id});
+            const agendamento = new Agendamento({ id: id });
             await agendamento.remover()
-            resp.status(204).send(JSON.stringify({message: `Agendamento: ${id} removido com sucesso`}));
+            const serializador = new SerializarAgendamento(
+                resp.getHeader('Content-Type')
+            );
+            resp.status(200).send(serializador.transformar(
+                { message: `Agendamento: ${id} removido com sucesso` }));
         } catch (error) {
-            resp.status(404).send(JSON.stringify({error: error.message}))
+            next(error)
         }
     },
 
-    alterarAgendamento: async(req, resp) => {
+    alterarAgendamento: async (req, resp, next) => {
         try {
-           const id = req.params.id;
-           const dadosBody = req.body; 
-           const dados = Object.assign({}, dadosBody, {id: id})
+            const id = req.params.id;
+            const dadosBody = req.body;
+            const dados = Object.assign({}, dadosBody, { id: id })
             const agendamento = new Agendamento(dados);
             await agendamento.atualizar();
-            resp.status(204).send()
+            const serializador = new SerializarAgendamento(
+                resp.getHeader('Content-Type')
+            );
+            resp.status(201).send(serializador.transformar(agendamento))
         } catch (error) {
-            resp.status(400).send()
+            next(error);
         }
     }
 }

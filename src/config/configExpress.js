@@ -8,11 +8,11 @@ module.exports = () => {
 
     app.use((req, resp, next) => {
         let formatoSolicitado = req.header('Accept');
-        if(formatoSolicitado ==='*/*'){
+        if (formatoSolicitado === '*/*') {
             formatoSolicitado = 'application/json';
         }
 
-        if(FormatosValidos.indexOf(formatoSolicitado) === -1) {
+        if (FormatosValidos.indexOf(formatoSolicitado) === -1) {
             resp.status(406);
             resp.end();
             return
@@ -33,6 +33,21 @@ module.exports = () => {
         serializarErro = new SerializarErro(
             resp.getHeader('Content-Type')
         );
+
+        if (error instanceof NaoEncontrado) {
+            status = 404;
+        }
+
+        if (error instanceof CampoInvalido || error instanceof CampoQtdmaxima
+            || error instanceof CampoQtdMinima) {
+            status = 400;
+        }
+
+        if(error instanceof FormatoInvalido){
+            status = 406;
+        }
+
+
 
         resp.status(status).send(
             serializarErro.transformar({
