@@ -23,9 +23,9 @@ module.exports = {
             await agendamento.buscar();
             const serializador = new SerializarAgendamento(
                 resp.getHeader('Content-Type')
+                ['status']
             )
-            resp.status(201).send(serializador.transformar(agendamento)
-            )
+            resp.status(201).send(serializador.transformar(agendamento));
         } catch (error) {
             next(error)
         }

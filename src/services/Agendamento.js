@@ -67,6 +67,15 @@ class Agendamento {
             if (typeof valor !== 'string' || valor.length === 0) {
                 throw new CampoInvalido(campo);
             }
+
+            if(valor.length > 60) {
+                throw new CampoQtdMaxima(campo);
+            }
+
+            if(valor.length < 8 && (campo !== 'nome_cliente' && campo !== 'nome_servico')){
+                throw new CampoQtdMinima(campo);
+            }
+
             if (campo == 'data_agendamento' && !moment(valor).isSameOrAfter(hoje)) {
                 throw new Error('Data inválida');
             }
