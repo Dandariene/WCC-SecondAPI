@@ -12,7 +12,7 @@ module.exports = {
             const serializar = new SerializarUsuario(
                 resp.getHeader('Content-Type')
             );
-            resp.status(202).send(serializar.transformar(
+            resp.status(200).send(JSON.stringify(
                 {message: `Usuário: ${id} removido com sucesso`}
             ))
         } catch (error) {

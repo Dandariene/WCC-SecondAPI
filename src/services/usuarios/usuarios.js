@@ -1,4 +1,9 @@
+const CampoInvalido = require('../../errors/CampoInvalido');
+const CampoQtdMaxima = require('../../errors/CampoQtdMaxima');
+const CampoQtdMinima = require('../../errors/CampoQtdMinima');
+const DadosNaoInformados = require('../../errors/DadosNaoInformados');
 const SequelizeUsuario = require('../../models/usuarios/SequelizeUsuario');
+const bcrypt = require('bcrypt');
 
 class Usuario {
     constructor({
@@ -15,6 +20,7 @@ class Usuario {
 
     async criar() {
         this.validar();
+        await this.adicionarSenha()
         const result = await SequelizeUsuario.adicionar({
             nome: this.nome,
             email: this.email,
@@ -85,6 +91,15 @@ class Usuario {
             }
         });
     };
+
+    async gerarHash(campo){
+        const saltRounds = 12;
+        return await bcrypt.hash(campo, saltRounds);
+    }
+
+    async adicionarSenha(){
+        this.senhaHash = awaitthis.gerarHash(this.senha);
+    }
 
 }
 module.exports = Usuario;

@@ -1,6 +1,7 @@
 const express = require('express');
 const routesAgendamento = require('../api/agendamentos');
 const routesUsuario = require('../api/usuario');
+const routesLogin = require('../api/login');
 const FormatosValidos = require('../shared/Serializar').FormatosValidos;
 const SerializarErro = require('../shared/Serializar').SerializarErro;
 const NaoEncontrado = require('../errors/NaoEncontrado');
@@ -32,8 +33,8 @@ module.exports = () => {
     app.use(express.json());
     app.use('/api', routesAgendamento);
     app.use('/api', routesUsuario);
-
-
+    app.use('/api', routesLogin);
+    
     app.use((error, req, resp, next) => {
         let status = 500;
 
