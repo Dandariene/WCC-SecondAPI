@@ -71,7 +71,7 @@ module.exports = {
 
     async remover(id) {
         try {
-            result = await TabelaUsuario.remove(
+            result = await TabelaUsuario.destroy(
                 {
                     where: {
                         id:id

@@ -1,5 +1,6 @@
 const express = require('express');
 const routesAgendamento = require('../api/agendamentos');
+const routesUsuario = require('../api/usuario');
 const FormatosValidos = require('../shared/Serializar').FormatosValidos;
 const SerializarErro = require('../shared/Serializar').SerializarErro;
 const NaoEncontrado = require('../errors/NaoEncontrado');
@@ -30,6 +31,7 @@ module.exports = () => {
 
     app.use(express.json());
     app.use('/api', routesAgendamento);
+    app.use('/api', routesUsuario);
 
 
     app.use((error, req, resp, next) => {

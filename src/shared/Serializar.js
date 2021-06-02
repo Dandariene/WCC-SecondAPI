@@ -58,8 +58,8 @@ class Serializar {
 class SerializarAgendamento extends Serializar {
     constructor(contentType, camposPersonalizados) {
         super();
-        this.camposPermitidos = ['id', 'nome_cliente', 
-        'data_agendamento', 'nome_servico'
+        this.camposPermitidos = ['id', 'nome_cliente',
+            'data_agendamento', 'nome_servico'
         ].concat(camposPersonalizados || [])
         this.contentType = contentType;
         this.tag = 'Agendamento';
@@ -77,11 +77,24 @@ class SerializarErro extends Serializar {
         this.tag = 'Error';
         this.tagList = 'Errors';
     }
+};
+
+class SerializarUsuario extends Serializar {
+    constructor(contentType, camposPersonalizados) {
+        super()
+        this.contentType = contentType;
+        this.camposPermitidos = [
+            'id', 'nome', 'email'
+        ].concat(camposPersonalizados || []);
+        this.tag = 'Usuário';
+        this.tagList = 'Usuários';
+    }
 }
 
 module.exports = {
     Serializar: Serializar,
     SerializarAgendamento: SerializarAgendamento,
     SerializarErro: SerializarErro,
+    SerializarUsuario: SerializarUsuario,
     FormatosValidos: ['application/json', 'application/xml']
 }
