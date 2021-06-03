@@ -8,6 +8,4 @@ function criarToken(usuario){
     return jwt.sign(payload, 'segredo');
 }
 
-module.exports = {
-    criarToken: criarToken
-}
+module.exports =  criarToken;

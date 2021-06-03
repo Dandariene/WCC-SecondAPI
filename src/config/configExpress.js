@@ -1,6 +1,6 @@
 const express = require('express');
 const routesAgendamento = require('../api/agendamentos');
-const routesUsuario = require('../api/usuario');
+const routesUsuario = require('../api/usuarios');
 const routesLogin = require('../api/login');
 const FormatosValidos = require('../shared/Serializar').FormatosValidos;
 const SerializarErro = require('../shared/Serializar').SerializarErro;
@@ -9,6 +9,8 @@ const CampoInvalido =require('../errors/FormatoInvalido');
 const CampoQtdMaxima = require('../errors/CampoQtdMaxima');
 const CampoQtdMinima = require ('../errors/CampoQtdMinima');
 const FormatoInvalido = require ('../errors/FormatoInvalido');
+
+const passport = require('./autenticacao');
 
 module.exports = () => {
     const app = express();

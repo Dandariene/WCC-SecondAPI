@@ -41,7 +41,7 @@ class Usuario {
         this.data_atualizacao = result.data_atualizacao;
     };
 
-    async buscarPorEmail () {
+    async buscarPorEmail() {
         const result = await SequelizeUsuario.buscarPorEmail(this.email);
         this.id = result.id;
         this.nome = result.nome;
@@ -49,26 +49,30 @@ class Usuario {
         this.data_criacao = result.data_criacao;
         this.data_atualizacao = result.data_atualizacao;
     };
-    
-    async atualizar(){
+
+    async atualizar() {
         await SequelizeUsuario.buscarPorPK(this.id);
-        const camposAtualizaveis = ['nome', 'email','senha'];
+        const camposAtualizaveis = ['nome', 'email', 'senha'];
         const dadosAtualizar = {};
 
-        camposAtualizaveis.forEach((campo) => {
+        camposAtualizaveis.forEach(async(campo) => {
             const valor = this[campo];
-           if(typeof valor === 'string' && valor.length > 0) {
-               dadosAtualizar[campo] = valor
-           }
+            if (typeof valor === 'string' && valor.length > 0) {
+                if (campo === 'senha') {
+                    dadosAtualizar[campo] = await this.gerarHash(valor);
+                    return
+                }
+                dadosAtualizar[campo] = valor
+            }
         });
-        if(Object.keys(dadosAtualizar).length === 0){
+        if (Object.keys(dadosAtualizar).length === 0) {
             throw new DadosNaoInformados();
         }
 
         await SequelizeUsuario.atualizar(this.id, dadosAtualizar);
     };
 
-    async remover () {
+    async remover() {
         await SequelizeUsuario.remover(this.id);
     };
 
@@ -78,26 +82,26 @@ class Usuario {
         camposObrigatorios.forEach((campo) => {
             const valor = this[campo];
 
-            if(typeof valor !== 'string' || valor.length ===0 ){
+            if (typeof valor !== 'string' || valor.length === 0) {
                 throw new CampoInvalido(campo);
             };
 
-            if(typeof valor.length > 8 && campo === 'senha' ){
+            if (typeof valor.length > 8 && campo === 'senha') {
                 throw new CampoQtdMinima(campo);
             };
 
-            if(typeof valor.length > 64 && campo === 'senha' ){
+            if (typeof valor.length > 64 && campo === 'senha') {
                 throw new CampoQtdMaxima(campo);
             }
         });
     };
 
-    async gerarHash(campo){
+    async gerarHash(campo) {
         const saltRounds = 12;
         return await bcrypt.hash(campo, saltRounds);
     }
 
-    async adicionarSenha(){
+    async adicionarSenha() {
         this.senhaHash = awaitthis.gerarHash(this.senha);
     }
 
