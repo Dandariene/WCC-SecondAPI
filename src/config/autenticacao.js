@@ -43,7 +43,7 @@ function conferirUsuario(usuario) {
         new BearerStrategy(
             async(token, done) =>{
                 try {
-                    const payload = jwt.verify(token, 'segredo');
+                    const payload = jwt.verify(token, process.env.JWT_KEY);
                     const usuario = new Usuario({id: payload.id});
                     await usuario.buscarPorid();
                     done(null, usuario)

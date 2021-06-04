@@ -9,7 +9,6 @@ const CampoInvalido =require('../errors/FormatoInvalido');
 const CampoQtdMaxima = require('../errors/CampoQtdMaxima');
 const CampoQtdMinima = require ('../errors/CampoQtdMinima');
 const FormatoInvalido = require ('../errors/FormatoInvalido');
-
 const passport = require('./autenticacao');
 
 module.exports = () => {
@@ -36,8 +35,7 @@ module.exports = () => {
     app.use('/api', routesAgendamento);
     app.use('/api', routesUsuario);
     app.use('/api', routesLogin);
-    
-    app.use((error, req, resp, next) => {
+        app.use((error, req, resp, next) => {
         let status = 500;
 
         serializarErro = new SerializarErro(

@@ -58,11 +58,7 @@ class Usuario {
         camposAtualizaveis.forEach(async(campo) => {
             const valor = this[campo];
             if (typeof valor === 'string' && valor.length > 0) {
-                if (campo === 'senha') {
-                    dadosAtualizar[campo] = await this.gerarHash(valor);
-                    return
-                }
-                dadosAtualizar[campo] = valor
+               dadosAtualizar[campo] = valor
             }
         });
         if (Object.keys(dadosAtualizar).length === 0) {
